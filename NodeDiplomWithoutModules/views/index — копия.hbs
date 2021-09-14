@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Закупка товаров для ПК</title>
+	<style type="text/css">
+	</style>
+    <meta charset="utf-8" />
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/my.css">
+	<link rel="stylesheet" href="css/chosen.bootstrap.css">
+</head>
+<body style = "background-attachment: fixed" background="fon.png">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/bootstrap.bundle.js"></script>
+	<script src="js/vue.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div id="app">
+
+	{{> header}}
+	
+	<div class="side-by-side clearfix">
+        <div>
+          <em>Turns This</em>
+          <select data-placeholder="Choose a Country..." style="width:350px;" tabindex="1">
+            <option value="Выберите товар"></option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+			</select>
+			</div>
+			</div>
+	
+	
+	<!--<div id="tovarsBlock"></div>-->
+	<h1>{{#if_eq isLogged 'false'}} Вы не вошли в аккаунт {{/if_eq}}{{isLogged}}</h1>
+	<div id="obshaya">
+	<div  id="IndexBlock" ref="Tovars">
+		<div id="video" ref="TovarVideo">
+		{{#each tovars}}
+			{{#if_eq this.Znachenie 'Видеокарта'}}
+				<span class="Tovar">
+				<h1>{{this.Nazvanie}}</h1>
+				<img src="rtx.png" style= "width: 450px">
+				<h3>{{this.price}} ₽</h3>
+				<div class="RightPosition">
+				<button type="button" v-on:click="GoKorzina({{this.id_Tovar}})" class="btn btn-primary">Добавить в корзину</button>
+				<button class="btn btn-success">Перейти на страницу товара</button>
+				</div>
+				</span>
+			{{/if_eq}}
+		{{/each}}
+		</div>
+		<div id="proc" ref="TovarProc">
+		{{#each tovars}}
+			{{#if_eq this.Znachenie 'Процессор'}}
+				<span class="Tovar">
+				<h1>{{this.Nazvanie}}</h1>
+				<img src="ryzen5.png" style= "width: 450px">
+				<h3>{{this.price}} ₽</h3>
+				<div class="RightPosition">
+				<button type="button" class="btn btn-primary">Добавить в корзину</button>
+				<button class="btn btn-success">Перейти на страницу товара</button>
+				</div>
+				</span>
+			{{/if_eq}}
+		{{/each}}
+		</div>
+	</div>
+	<div id="ItemKategorii">
+		<h4>Список товаров по категориям:</h4>
+			<div class="list-group">
+			  <a href="video" v-on:click="video" class="list-group-item list-group-item-action">Видеокарты</a>
+			  <a href="proc" v-on:click="proc" class="list-group-item list-group-item-action">Процессоры</a>
+			  <a href="#" class="list-group-item list-group-item-action">Куллеры</a>
+			</div>
+	</div>
+	</div>
+	<div v-html=inner></div>
+	\{{ message }}
+</div>
+</body>
+	
+
+	<!-- После подключения jQuery, Popper и Bootstrap JS -->
+<script>
+var app = new Vue({
+	el: '#app',
+	data: {
+		message: '<h1>Привет, Vue!</h1>',
+		inner: "<h1>Test</h1>"
+	},
+	mounted() {
+		this.$refs.TovarVideo.style.display = "block";
+		this.$refs.TovarProc.style.display = "none";
+	},
+	methods: {
+		GoKorzina: function (IndexTovara,event) {
+			var IsLogged = "{{isLogged}}";
+			alert(IsLogged);
+			if (IsLogged == "true")
+			{
+				axios({
+					method: 'post',
+					url: '/tovar',
+					//params:{id: IndexTovara},
+					data: {
+						id: IndexTovara
+					}
+				});
+			}
+			else
+			{
+				window.location.href = '/login';
+			}
+		},
+		vhod(e) {
+			//e.preventDefault()
+			if (this.$refs.FormaVhoda.style.display == 'block')
+				this.$refs.FormaVhoda.style.display = 'none';
+			else 
+				this.$refs.FormaVhoda.style.display = 'block';
+				console.log(e.currentTarget.href)
+    },
+		ubrat(e){
+			e.preventDefault();
+			this.$refs.FormaVhoda.style.display = 'none';
+	},
+		video(e){
+			e.preventDefault();
+			console.log(this.$refs);
+			this.$refs.TovarVideo.style.display = "block";
+			this.$refs.TovarProc.style.display = "none";
+	},
+		proc(e){
+			e.preventDefault();
+			this.$refs.TovarProc.style.display = "block";
+			this.$refs.TovarVideo.style.display = "none";
+		}
+	}
+})
+	/*$("a[href='vhod']").click(function(e){
+	e.preventDefault();
+	//$("#MestoFormaVhoda").load("vhod.hbs");
+	if ($('#FormaVhoda').is(':visible')) {
+    // $element виден
+	$('#FormaVhoda').hide();
+	}
+	else 
+	{
+	$('#FormaVhoda').show();	
+	}
+	
+		
+	});
+	$("a[href='ubrat']").click(function(e){
+	e.preventDefault();
+	$('#FormaVhoda').hide();	
+	});
+	
+	$("a[href='tovars']").click(function(e){
+	e.preventDefault();
+	if ($('#FormaVhoda').is(':hidden')){
+	$('#tovarsBlock').show();
+	$('#obshaya').hide();
+	}
+	$('#tovarsBlock').load('/tovars');
+	
+	});
+	
+	$("a[href='home']").click(function(e){
+	e.preventDefault();
+	$('#tovarsBlock').hide();	
+	$('#obshaya').show();
+	});
+	
+	
+	$("a[href='video']").click(function(e){
+	e.preventDefault();
+	$('#IndexBlock').show();
+	$('#proc').hide();
+	$('#video').show();	
+	});
+	$("a[href='proc']").click(function(e){
+	e.preventDefault();
+	$('#IndexBlock').show();
+	$('#proc').show();
+	$('#video').hide();	
+	});*/
+</script>
+</body>
+<html>

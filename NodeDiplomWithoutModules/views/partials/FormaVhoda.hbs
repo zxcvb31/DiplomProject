@@ -1,0 +1,58 @@
+<div class="form" id="FormaVhoda" style = "display : none; z-index: 9999;" ref="FormaVhoda">
+		<div class="RightPosition">
+			<a href = "ubrat" style = "font-size: 35px" v-on:click="ubrat">&times;</a>
+		</div>
+		<form class="form-horizontal" role="form" method="POST" action ="login">
+			<div class="form-group">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm control-label">Логин</label>
+					<div class="col-sm">
+						<input type="text" class="form-control" placeholder="Логин" name="login">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm control-label">Пароль</label>
+					<div class="col-sm">
+						<input type="password" class="form-control" placeholder="Пароль" name="password">
+					</div>
+				</div>
+				<div class="row" style="margin: 7px">
+					<div class="form-group form-check col-sm">
+						  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="check">
+						  <label class="form-check-label" for="flexCheckDefault">
+							Зарегистрировать новый аккаунт
+						  </label>
+					</div>
+
+						<div class="form-group RightPosition col-sm">
+							<div class="col-sm-offset col-sm">
+								<button type="submit" class="btn btn-info btn-sm">Войти</button>
+							</div>
+						</div>  
+				</div>
+			</div>
+		</form>
+		<!-- form  -->
+</div>
+<h1>
+<div id="news">news</div>
+</h1>
+<script>
+$(document).ready(function() {
+    $('form').submit(function(event){
+        event.preventDefault();//останавливаем отправку формы
+        //add stuff here
+		$a=($(this).serializeArray());
+		console.log($a);
+		if(!!!$a[2])$a[2]={name: "check",value:"off"};
+		console.log($a[2]["value"]);
+		$.post('/login', {'login':$a[0]["value"], 'passw' : $a[1]["value"],'check' : $a[2]["value"]},
+		function(data) {
+		console.log(data);
+		$('#news').html(data);
+		//$("a[href='login']").html("Выход");
+		});
+
+    });
+});
+</script>

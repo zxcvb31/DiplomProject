@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Закупка товаров для ПК</title>
+	<style type="text/css">
+	</style>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/my.css">
+	<link rel="stylesheet" href="css/chosen.bootstrap.css">
+</head>
+<body background="imagines/fon.png">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.bundle.js"></script>
+	<script src="js/vue.min.js"></script>
+	<script src="js/Popper.js"></script>
+	<script src="js/axios.min.js"></script>
+<div id="app">
+
+	{{> header}}
+	
+	
+	<!--<div id="tovarsBlock"></div>-->
+	<h1>{{#if_eq isLogged 'false'}} Вы не вошли в аккаунт {{/if_eq}}{{isLogged}}</h1>
+	<div class="container-fluid">
+		<h1 style = "text-align: center">Список товаров по категориям</h1>
+		<div class="row">
+				<div class="dropdown mx-auto">
+				  <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Выберите товар
+				  </a>
+
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" v-on:click="video" href="#">Видеокарты</a>
+					<a class="dropdown-item" v-on:click="proc" href="#">Процессоры</a>
+					<a class="dropdown-item" href="#">Куллеры</a>
+				  </div>
+				</div>
+				<!--<div class="col-sm">
+				<a href="video" v-on:click="video" class="list-group-item list-group-item-action">Видеокарты</a>
+				</div>
+				<div class="col-sm">
+				<a href="proc" v-on:click="proc" class="list-group-item list-group-item-action">Процессоры</a>
+				</div>
+				<div class="col-sm">
+				<a href="#" class="list-group-item list-group-item-action">Куллеры</a>
+				</div>-->
+		</div>
+		<div class="row">
+		{{#each tovars}}
+			{{#if_eq this.Znachenie 'Видеокарта'}}
+				<div class="mx-auto Video Tovar">
+			{{/if_eq}}
+			{{#if_eq this.Znachenie 'Процессор'}}
+				<div class="mx-auto Proc Tovar">
+			{{/if_eq}}
+				<h4>{{this.Nazvanie}}</h4>
+				<img src="imagines/{{img}}" style="width:450px; height:300px" class="img-fluid">
+					<h3>{{this.price}} ₽</h3>
+					<div class="RightPosition">
+						<button type="button" v-on:click="GoKorzina({{this.id_Tovar}})" class="btn btn-primary">Добавить в корзину</button>
+						<button class="btn btn-success" v-on:click="GoTovar({{this.id_Tovar}})">Перейти на страницу товара</button>
+					</div>
+			</div>
+		{{/each}}
+		
+		</div>
+	</div>
+	<!--<div id="obshaya">
+	<div  id="IndexBlock" ref="Tovars">
+
+		{{#each tovars}}
+			{{#if_eq this.Znachenie 'Видеокарта'}}
+				<span class="Video Tovar">
+				<h3>{{this.Nazvanie}}</h3>
+				<img src="rtx.png" style= "width: 450px">
+			{{/if_eq}}
+			{{#if_eq this.Znachenie 'Процессор'}}
+			<span class="Proc Tovar">
+			<h3>{{this.Nazvanie}}</h3>
+			<img src="ryzen5.png" style= "width: 450px">
+			{{/if_eq}}
+				<h3>{{this.price}} ₽</h3>
+				<div class="RightPosition">
+				<button type="button" v-on:click="GoKorzina({{this.id_Tovar}})" class="btn btn-primary">Добавить в корзину</button>
+				<button class="btn btn-success" v-on:click="GoTovar({{this.id_Tovar}})">Перейти на страницу товара</button>
+				</div>
+				</span>
+		{{/each}}
+
+	</div>
+	<!--<div id="ItemKategorii">
+		<h4>Список товаров по категориям:</h4>
+			<div class="list-group">
+			  <a href="video" v-on:click="video" class="list-group-item list-group-item-action">Видеокарты</a>
+			  <a href="proc" v-on:click="proc" class="list-group-item list-group-item-action">Процессоры</a>
+			  <a href="#" class="list-group-item list-group-item-action">Куллеры</a>
+			</div>
+	</div>
+	</div>
+	<div v-html=inner></div>
+	\{{ message }}-->
+</div>
+</body>
+	
+
+	<!-- После подключения jQuery, Popper и Bootstrap JS -->
+<script>
+var app = new Vue({
+	el: '#app',
+	data: {
+		message: '<h1>Привет, Vue!</h1>',
+		inner: "<h1>Test</h1>"
+	},
+	mounted() {
+		//this.$refs.TovarVideo.style.display = "block";
+		//this.$refs.TovarProc.style.display = "none";
+		var elements = document.getElementsByClassName('Tovar');
+		for (let elem of elements) {
+			if (elem.className =="mx-auto Video Tovar")
+			{
+				elem.style.display = "inline-block";
+			}
+			else
+			{
+			elem.style.display = "none";
+			}
+		}
+	},
+	methods: {
+		GoKorzina: function (IndexTovara,event) {
+			var IsLogged = "{{isLogged}}";
+			alert(IsLogged);
+			if (IsLogged == "true")
+			{
+				axios({
+					method: 'post',
+					url: '/tovar',
+					//params:{id: IndexTovara},
+					data: {
+						id: IndexTovara
+					}
+				});
+			}
+			else
+			{
+				window.location.href = '/login';
+			}
+		},
+		GoTovar: function (IndexTovara,event) {
+			location.href ="tovar?id="+IndexTovara;
+				//window.location.href = '/login';
+
+		},
+		video(e){
+			e.preventDefault();
+			var elements = document.getElementsByClassName('Tovar');
+			for (let elem of elements) {
+				if (elem.className =="mx-auto Video Tovar")
+				{
+					elem.style.display = "inline-block";
+				}
+				else
+				{
+				elem.style.display = "none";
+				}
+			}
+	},
+		proc(e){
+			e.preventDefault();
+			var elements = document.getElementsByClassName('Tovar');
+			for (let elem of elements) {
+				if (elem.className =="mx-auto Proc Tovar")
+				{
+					elem.style.display = "inline-block";
+				}
+				else
+				{
+				elem.style.display = "none";
+				}
+			}
+		}
+	}
+})
+	/*$("a[href='vhod']").click(function(e){
+	e.preventDefault();
+	//$("#MestoFormaVhoda").load("vhod.hbs");
+	if ($('#FormaVhoda').is(':visible')) {
+    // $element виден
+	$('#FormaVhoda').hide();
+	}
+	else 
+	{
+	$('#FormaVhoda').show();	
+	}
+	
+		
+	});
+	$("a[href='ubrat']").click(function(e){
+	e.preventDefault();
+	$('#FormaVhoda').hide();	
+	});
+	
+	$("a[href='tovars']").click(function(e){
+	e.preventDefault();
+	if ($('#FormaVhoda').is(':hidden')){
+	$('#tovarsBlock').show();
+	$('#obshaya').hide();
+	}
+	$('#tovarsBlock').load('/tovars');
+	
+	});
+	
+	$("a[href='home']").click(function(e){
+	e.preventDefault();
+	$('#tovarsBlock').hide();	
+	$('#obshaya').show();
+	});
+	
+	
+	$("a[href='video']").click(function(e){
+	e.preventDefault();
+	$('#IndexBlock').show();
+	$('#proc').hide();
+	$('#video').show();	
+	});
+	$("a[href='proc']").click(function(e){
+	e.preventDefault();
+	$('#IndexBlock').show();
+	$('#proc').show();
+	$('#video').hide();	
+	});*/
+</script>
+</body>
+<html>

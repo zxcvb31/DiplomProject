@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>Список товаров</title>
+	<style type="text/css">
+	</style>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/my.css">
+</head>
+<body background="imagines/fon.png">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.bundle.js"></script>
+	<script src="js/vue.min.js"></script>
+	<script src="js/axios.min.js"></script>
+<div id="app">
+	{{> header}}
+<div id="tovarsBlock">
+<div class="row"></div>
+{{#each tovars}}
+	<div class="mx-auto Tovar">
+	<h4>{{this.Nazvanie}}</h4>
+	<img src="imagines/{{img}}" style= "width: 450px; height:300px" class="img-fluid">
+	<h3>{{this.price}} ₽</h3>
+	<div class="RightPosition">
+		<button type="button" v-on:click="GoKorzina({{this.id_Tovar}})" class="btn btn-primary">Добавить в корзину</button>
+		<button  class="btn btn-success" v-on:click="GoTovar({{this.id_Tovar}})">Перейти на страницу товара</button>
+	</div>
+	</div>
+{{/each}}
+</div>
+<hr>
+</div>
+</div>
+</body>
+<script>
+	var app = new Vue({
+		el: '#app',
+		data: {
+		},
+		methods: {
+		GoKorzina: function (IndexTovara,event) {
+			var IsLogged = "{{isLogged}}";
+			alert(IsLogged);
+			if (IsLogged == "true")
+			{
+				axios({
+					method: 'post',
+					url: '/tovar',
+					//params:{id: IndexTovara},
+					data: {
+						id: IndexTovara
+					}
+				});
+			}
+			else
+			{
+				window.location.href = '/login';
+			}
+		},
+		GoTovar: function (IndexTovara,event) {
+			location.href ="tovar?id="+IndexTovara;
+				//window.location.href = '/login';
+
+		},
+		vhod(e) {
+			e.preventDefault()
+			if (this.$refs.FormaVhoda.style.display == 'block')
+			this.$refs.FormaVhoda.style.display = 'none';
+			else 
+			this.$refs.FormaVhoda.style.display = 'block';
+			console.log(e.currentTarget.href)
+		},
+		ubrat(e){
+			e.preventDefault();
+			this.$refs.FormaVhoda.style.display = 'none';
+		}
+	  }
+	})
+</script>
+</html>

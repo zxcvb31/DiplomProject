@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Логин</title>
+	<style type="text/css">
+	</style>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	
+	
+	
+	<link rel="stylesheet" href="css/VueFormastyle.css">
+	
+</head>
+<body style = "background-attachment: fixed" background="imagines/fon.png">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.bundle.js"></script>
+
+	{{> header}}
+
+<div class="form" id="FormaVhoda" style = "z-index: 9999;" ref="FormaVhoda">
+	<div id="app" v-cloak>
+
+	  <div class="actions">
+			<button :class='[{ active: isDisabled("register") }]' 
+				 @click.prevent='setComponent("register")'>Регистрация
+			</button> 
+			<button :class='[{ active: isDisabled("signin") }]' 
+				 @click.prevent='setComponent("signin")'>Вход
+			</button>
+	  </div>
+
+	  <transition name='form' mode='out-in'>
+			<keep-alive>
+				 <component :feedback='feedback' :is="currentComponent"
+				 @register-form='handleForm' @signin-form='handleForm'></component>
+			</keep-alive>
+	  </transition>
+
+	</div>
+
+	 <!-- Register Template -->
+	 <template id="registerTemplate">
+		  <form @submit.prevent='onSubmit' ref='form' action="/login" class='register-form'>
+				<h2>Регистрация</h2>
+				<div class="form-group" >
+					 <label for="firstname">Имя</label>
+					 <input required type="text" v-model.trim='user.firstname' id='firstname' placeholder="Имя">
+				</div>
+				<div class="form-group">
+					 <label for="lastname">Фамилия</label>
+					 <input required type="text" v-model.trim='user.lastname' id='lastname' placeholder="Фамилия">
+				</div>
+				<div class="form-group">
+					 <label for="email">Электронный адрес</label>
+					 <input required type="email" v-model.trim='user.email' id='email' placeholder="example@gmail.com">
+				</div>
+				<div class="form-group">
+					 <label for="password">Пароль</label>
+					 <input required type="password" v-model='user.password' placeholder="Пароль" id='password'>
+				</div>
+				<div class="form-group">
+					 <label for="passwordcheck">Повторение пароля</label>
+					 <input required type="password" v-model='user.passwordChck' placeholder="Повторение пароля" id='passwordcheck'>
+				</div>
+				<input type="submit" :disabled='!isFormValid' value='Регистрация'>
+		  </form>
+	 </template>
+
+	 <!-- Signin Template -->
+	 <template id="signinTemplate">
+		  <form ref='form' @submit.prevent='handleForm' action="/login" class='signin-form'>
+				<h2>Вход</h2>
+				<div class="form-group">
+					 <label for="email">Электронный адрес</label>
+					 <input required v-model='user.email' type="email" id='email' placeholder="example@gmail.com">
+				</div>
+				<div class="form-group">
+					 <label for="password">Пароль</label>
+					 <input required v-model='user.password' type="password" id='password' placeholder="Пароль">
+				</div>
+				<input :disabled='!isFormValid' type="submit" value="Войти">
+		  </form>
+	 </template>
+
+	<!-- partial -->
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js'></script><script  src="js/VueFormascript.js"></script>
+</div>
+
+
+</body>
+	
+
+	<!-- После подключения jQuery, Popper и Bootstrap JS -->
+<script>
+	/*$(document).ready(function() {
+    $('form').submit(function(event){
+       // event.preventDefault();//останавливаем отправку формы
+        //add stuff here
+		$a=($(this).serializeArray());
+		console.log($a);
+		if(!!!$a[2])$a[2]={name: "check",value:"off"};
+		console.log($a[2]["value"]);
+		/*$.post('/login', {'login':$a[0]["value"], 'passw' : $a[1]["value"],'check' : $a[2]["value"]},
+		function(data) {
+		console.log(data);
+		//$('#news').html(data);
+		$("a[href='vhod']").html("Выход");
+		});
+
+    });
+});*/
+</script>
+</body>
+<html>

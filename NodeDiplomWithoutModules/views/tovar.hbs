@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Закупка товаров для ПК</title>
+	<style type="text/css">
+	</style>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/my.css">
+	<link rel="stylesheet" href="css/chosen.bootstrap.css">
+</head>
+<body style = "background-attachment: fixed" background="imagines/fon.png">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.bundle.js"></script>
+	<script src="js/vue.min.js"></script>
+	<script src="js/axios.min.js"></script>
+<div id="app">
+
+	{{> header}}
+	{{tovar.id_Tovar}}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="mx-auto Tovar" style="width:75%">
+				<div class="row">
+					<div class="col-sm">
+					<h2>{{tovar.Nazvanie}}</h2>
+					<img src="imagines/{{tovar.img}}" style="width:750px;height:350px" class="img-fluid">
+					<h1 class="">{{tovar.price}} ₽</h1>
+					</div>
+					<div class="col-sm" align="center">
+					<h2>Характеристики товара</h2>
+						<div align="left">
+							<h4>Описание: {{tovar.Opisanie}}</h4>
+							<h4>Значение: {{tovar.Znachenie}}</h4>
+							<h4>Поставщик: {{tovar.NamePostavshik}}</h4>
+						</div>
+					</div>
+				</div>
+				<div class="RightPosition">
+					<button type="button" v-on:click="GoKorzina({{tovar.id_Tovar}})" class="btn btn-primary">Добавить в корзину</button>
+					<button class="btn btn-success">Заказать</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+	
+
+	<!-- После подключения jQuery, Popper и Bootstrap JS -->
+<script>
+var app = new Vue({
+	el: '#app',
+	data: {
+	},
+	mounted() {
+	},
+	methods: {
+		GoKorzina: function (IndexTovara,event) {
+			var IsLogged = "{{isLogged}}";
+			alert(IsLogged);
+			if (IsLogged == "true")
+			{
+				axios({
+					method: 'post',
+					url: '/tovar',
+					data: {
+						id: IndexTovara
+					}
+				});
+			}
+			else
+			{
+				window.location.href = '/login';
+			}
+		},
+	}
+})
+
+
+</script>
+</body>
+<html>

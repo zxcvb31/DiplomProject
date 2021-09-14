@@ -1,0 +1,54 @@
+<div style= "height: 60px;">
+	<header style= "width: 100%; z-index: 9998;">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+			<a class="navbar-brand" href="#">Учет и заказ товаров на сайте</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Домой<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="tovars">Все товары</a>
+					</li>
+					<li class="nav-item">
+					{{#compare isLogged "==" "false" }}
+						<a class="nav-link" href="korzina">Корзина</a>
+					{{/compare}}
+					{{#compare isLogged "==" "true" }}
+						<a class="nav-link" href="korzina">Корзина</a>
+					{{/compare}}
+					{{#compare isLogged "==" "admin" }}
+						<a class="nav-link" href="korzina">Список всех купленных товаров</a>
+					{{/compare}}
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Справочная информация
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="#">Список клиентов</a>
+							<a class="dropdown-item" href="#">Поставщики</a>
+							<a class="dropdown-item" href="#">О сайте</a>
+						</div>
+					</li>			
+					
+				
+				</ul>
+				{{#compare isLogged "==" "false" }}
+				<div><a class="nav-link" href="login">Вход</a></div>
+				{{/compare}}
+				{{#compare isLogged "==" "true" }}
+				<div><a class="nav-link pull-right" href="logout">Выход</a></div>
+				{{/compare}}
+				{{#compare isLogged "==" "admin" }}
+				<div><a class="nav-link pull-right" href="logout">Выход</a></div>
+				{{/compare}}
+			</div>
+
+			
+		</nav>
+	</header>
+</div>

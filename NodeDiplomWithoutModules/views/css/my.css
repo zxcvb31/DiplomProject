@@ -1,0 +1,111 @@
+/*Вывод списка в шапке при наведении*/
+nav.navbar .dropdown:hover > .dropdown-menu {
+ display: block; 
+} 
+
+@media only screen and (max-device-width: 992px){
+    nav.navbar .dropdown:hover .dropdown-menu{
+        display: none;
+    }
+}
+
+
+/*Настройка фоновой картинки сайта*/
+body
+{
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#FormaVhoda{
+	margin: 0px;
+    position: fixed;
+    top: 20%;
+    left:0;
+    right:0;
+	width: 35%;
+	margin: 0 auto;
+	padding-top: 0px;
+    border-width:1;
+    border-color: rgb(190,190,190);
+    border-style: solid;
+	background: #ddd;
+    }
+.RightPosition
+{
+	text-align: right;
+	padding: 5px;
+}
+.Tovar
+{
+	border-width:1;
+    border-color: rgb(190,190,190);
+    border-style: solid;
+	display: inline-block;
+	margin: 10px 0;
+	vertical-align: top;
+	background: #8FBC8F;
+	border-radius: 10px;
+}
+#tovarsBlock
+{
+	text-align:center;
+}
+#IndexBlock{
+	text-align:center;
+	width: 70%;
+}
+
+#ItemKategorii
+{
+	position: fixed;
+	display: block;
+	text-align:left;
+	border-width:1;
+	border-color: rgb(190,190,190);
+	border-style: solid;
+	background: #8FBC8F;
+	right:0;
+	top: 7%;
+}
+/*Настройка кнопки прибавления и убавления в корзине*/
+.quantity_inner * {
+    box-sizing: border-box;    
+}    
+.quantity_inner {
+    display: flex;
+    justify-content: center;
+}        
+.quantity_inner .bt_minus,
+.quantity_inner .bt_plus,
+.quantity_inner .quantity {
+    color: #BFE2FF;
+
+
+    border-radius: 3px;
+    border: 1px solid #BFE2FF;
+    background: #337AB7;
+    cursor: pointer;
+    outline: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.2);
+}
+.quantity_inner .quantity {
+    width: 40px;
+    text-align: center;
+    font-size: 22px;
+    color: #FFF;
+    font-family:Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+   
+.quantity_inner
+{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}
+
+

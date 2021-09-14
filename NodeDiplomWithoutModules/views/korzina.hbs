@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список абонентов</title>
+	<style type="text/css">
+	</style>
+    <meta charset="utf-8" />
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/my.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body style = "background-attachment: fixed" background="imagines/fon.png">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.bundle.js"></script>
+	<script src="js/vue.min.js"></script>
+	<script src="js/axios.min.js"></script>
+<div id="app">
+	{{> header}}
+	
+	<div style = "z-index: -50;">
+		<!--{{#each tovars}}
+		<div class="row" style = "margin: 2px; border-width:1;border-color: rgb(190,190,190);border-style: solid;background: #8FBC8F;">
+		{{this.num}}
+			<div class="col-lg-3 col-sm-3 col-xs-12" style="height: 100px; line-height: 100px;">
+			<img  src="rtx.png" style="width: 95px; height: 95px;  " />
+			</div>
+			<div  class="col-lg-2 col-sm-4 col-xs-12" style="height: 100px; line-height: 100px;">
+			{{this.Nazvanie}}
+			</div>
+			<div class="col-lg-2 col-sm-2 col-xs-12" style="height: 100px; line-height: 100px;">
+			{{this.price}} ₽
+			</div>
+			<div class="col-lg-2 col-sm-2 col-xs-12" style="height: 100px; line-height: 100px;">
+			<label>Количество </label>
+			<input class="inputNumber" style="height: 20px; width: 40px;" type="number" value="{{this.kol_vo}}" min = 1 max = 20></input>
+			<button type="button" class="btn btn-success" v-on:click="updateTovar({{this.id_korzina}},{{this.kol_vo}})">✓</button>
+			</div>
+			<div class="col-lg-2 col-sm-2 col-xs-12" style="height: 100px; line-height: 100px;">
+			<button type="button" class="btn btn-danger" v-on:click="deleteTovar({{this.id_korzina}})">Удалить</button>
+			</div>
+		</div>
+		{{/each}}-->
+		
+		<div v-for ="tovar in tovars" class="row" style = "marg	in: 2px; border-width:1;border-color: rgb(190,190,190);border-style: solid;background: #8FBC8F;">
+			<div class="col-lg-2 col-sm-3 col-xs-12" style="height: 100px; line-height: 100px;">{(tovar.num)}
+			<img  v-bind:src="tovar.img" style="width: 95px; height: 95px;  " />
+			</div>
+			<div  class="col-lg-3 col-sm-4 col-xs-12" style="height: 100px; line-height: 100px;">
+				{(tovar.nazvanie)}
+			</div>
+			<div class="col-lg-2 col-sm-2 col-xs-12" style="height: 100px; line-height: 100px;">
+				Цена:  {(tovar.price)} ₽
+			</div>
+			<div class="col-lg-2 col-sm-2 col-xs-12" style="">
+				<div class="quantity_inner">        
+					<button v-on:click="btn_minus(tovar.idKorzina)" class="bt_minus"> -
+					</button>
+					<input v-model = "tovar.kolvo" type="text" value="1" size="2" class="quantity" data-max-count="20" />
+					<button v-on:click="btn_plus(tovar.idKorzina)" class="bt_plus"> +
+					</button>
+					<button type="button" style="margin-left:5px" class="btn btn-success" v-on:click='updateTovar(tovar.idKorzina,tovar.kolvo)'>✓</button>
+				</div>
+			<!--<input v-model = "tovar.kolvo" style="height: 20px; width: 40px;" type="number"  min = 1 max = 20></input>-->
+			</div>
+			<div class="col-lg-2 col-sm-4 col-xs-8" style="height: 100px; line-height: 100px;">
+				Cумма:  {(tovar.summ)} ₽
+			</div>
+			<div class="col-lg-1 col-sm-2 col-xs-12" style="height: 100px; line-height: 100px;">
+			<button type="button" v-on:click="deleteTovar(tovar.idKorzina)" class="btn btn-danger">Удалить</button>
+			</div>
+		</div>
+		
+		
+		
+		
+
+		<hr>
+		<div style="width: 100%; text-align: right;">
+			<div style="width: 50%; float: right;">
+
+			<h2>{(summa)} ₽</2>
+			<!--<button type="button" class="btn btn-warning">Пересчитать</button>-->
+			<button type="button" class="btn btn-success">Оформить заказ</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+	<!-- После подключения jQuery, Popper и Bootstrap JS -->
+<script>
+
+
+var app = new Vue({
+	el: '#app',
+	delimiters: ['{(', ')}'],
+	data: {
+		tovars:[
+		/*{'idKorzina':2,'price':2,'kolvo':2,'num':2,'nazvanie':'2'},
+		{'idKorzina':2,'price':2,'kolvo':2,'num':2,'nazvanie':'2'},
+			],*/
+
+		{{#each tovars}}
+		{'idKorzina':{{this.id_korzina}},'price':{{this.price}},'kolvo':{{this.kol_vo}},'num':{{this.num}},'summ':{{this.summ}},'img':'imagines/{{this.img}}','nazvanie':'{{this.Nazvanie}}'},
+		{{/each}}
+		],
+		summa:{{summa}},
+		
+		
+		
+		},
+	methods: {
+		deleteTovar: function (IndexKorzina,event) {
+			if(confirm("Вы действительно хотите удалить этот товар?"))
+				{
+				axios({
+					method: 'delete',
+					url: '/korzina',
+					data: {
+						id: IndexKorzina
+					},
+				}).then(response => { 
+					window.location.href =response.config.url;
+					}) 
+				//window.location.href = '/login';
+				}
+		},
+		updateTovar: function (IndexKorzina,kolvo,event) {
+			console.log(IndexKorzina);
+			console.log(kolvo);
+			axios({
+					method: 'put',
+					url: '/korzina',
+					data: {
+						id: IndexKorzina,
+						kolvo:kolvo
+					},
+				}).then(response => { 
+					window.location.href =response.config.url;
+					}) 
+			
+		},
+		btn_plus:function(idkorzin,event){
+			console.log(this.tovars);
+			let index = 0;
+			let summ = 0;
+			for (let value of this.tovars) {
+				console.log(value.idKorzina);
+				
+				if(value.idKorzina ==idkorzin)
+				{
+					if(this.tovars[index].kolvo<20)
+						{
+							this.tovars[index].kolvo++;
+							this.tovars[index].summ=this.tovars[index].kolvo*this.tovars[index].price;
+							for(let value2 of this.tovars)
+							{
+								summ+=value2.summ;
+								this.summa = summ;
+							}
+						}
+				}
+				console.log(index);
+				index++;
+			}
+		},
+		btn_minus:function(idkorzin,event){
+			console.log(this.tovars);
+			let index = 0;
+			let summ = 0;
+			for (let value of this.tovars) {
+				console.log(value.idKorzina);
+				
+				if(value.idKorzina ==idkorzin)
+				{
+					if(this.tovars[index].kolvo>1)
+						{
+							this.tovars[index].kolvo--;
+							this.tovars[index].summ=this.tovars[index].kolvo*this.tovars[index].price;
+							for(let value2 of this.tovars)
+							{
+								summ+=value2.summ;
+								this.summa = summ;
+							}
+						}
+				}
+				console.log(index);
+				index++;
+			}
+		}
+	}
+})
+	
+
+/*	
+// Убавляем кол-во по клику
+	$('.quantity_inner .bt_minus').click(function() {
+	let $input = $(this).parent().find('.quantity');
+	let count = parseInt($input.val()) - 1;
+	count = count < 1 ? 1 : count;
+	$input.val(count);
+});
+// Прибавляем кол-во по клику
+$('.quantity_inner .bt_plus').click(function() {
+	let $input = $(this).parent().find('.quantity');
+	let count = parseInt($input.val()) + 1;
+	count = count > parseInt($input.data('max-count')) ? parseInt($input.data('max-count')) : count;
+	$input.val(parseInt(count));
+}); 
+// Убираем все лишнее и невозможное при изменении поля
+$('.quantity_inner .quantity').bind("change keyup input click", function() {
+	if (this.value.match(/[^0-9]/g)) {
+		this.value = this.value.replace(/[^0-9]/g, '');
+	}
+	if (this.value == "") {
+		this.value = 1;
+	}
+	if (this.value > parseInt($(this).data('max-count'))) {
+		this.value = parseInt($(this).data('max-count'));
+	}	
+});		*/
+	
+</script>
+</body>
+<html>
