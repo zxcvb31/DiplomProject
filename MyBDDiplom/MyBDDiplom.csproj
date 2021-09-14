@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5FFC01BA-61A5-46D8-9382-523D2DCD5B66}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MyBDKursach</RootNamespace>
+    <AssemblyName>MyBDKursach</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.21.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 8.0.21\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sklads.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sklads.Designer.cs">
+      <DependentUpon>Sklads.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Polki.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Polki.Designer.cs">
+      <DependentUpon>Polki.cs</DependentUpon>
+    </Compile>
+    <Compile Include="postuplenieFinal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="postuplenieFinal.Designer.cs">
+      <DependentUpon>postuplenieFinal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tovar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tovar.Designer.cs">
+      <DependentUpon>tovar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="korzinaFinal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="korzinaFinal.Designer.cs">
+      <DependentUpon>korzinaFinal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="newAddresFinal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newAddresFinal.Designer.cs">
+      <DependentUpon>newAddresFinal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SvedenyaPostavshika.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SvedenyaPostavshika.Designer.cs">
+      <DependentUpon>SvedenyaPostavshika.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fio.Designer.cs">
+      <DependentUpon>fio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="postavshik.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="postavshik.Designer.cs">
+      <DependentUpon>postavshik.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Sklads.resx">
+      <DependentUpon>Sklads.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Polki.resx">
+      <DependentUpon>Polki.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="postuplenieFinal.resx">
+      <DependentUpon>postuplenieFinal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tovar.resx">
+      <DependentUpon>tovar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="korzinaFinal.resx">
+      <DependentUpon>korzinaFinal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="newAddresFinal.resx">
+      <DependentUpon>newAddresFinal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SvedenyaPostavshika.resx">
+      <DependentUpon>SvedenyaPostavshika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fio.resx">
+      <DependentUpon>fio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="postavshik.resx">
+      <DependentUpon>postavshik.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Логотип_ОАО_Зеленодольский_завод_имени_Горького.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo3.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
